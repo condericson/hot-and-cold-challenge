@@ -1,0 +1,18 @@
+
+
+
+
+.gameEnclosure {
+  width: 300px;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.responseTextDiv {
+  height: 50px;
+}
+
+.responseTextDiv > p {
+  margin: 0;
+}
