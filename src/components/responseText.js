@@ -1,10 +1,5 @@
 import React from 'react';
 
-
-ResponseText.defaultProps = {
-    responseText: "Make your guess!"
-};
-
 export default function ResponseText(props) {
     return (
       <div className="responseTextDiv">
@@ -12,3 +7,7 @@ export default function ResponseText(props) {
       </div>
     );
 };
+
+ResponseText.defaultProps = {
+  responseText: "Make a guess!"
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GuessNumber from './guessNumber';
+
 
 
 class GuessEntryForm extends React.Component {
@@ -22,9 +22,9 @@ class GuessEntryForm extends React.Component {
     render() {
           return (
             <form className="guessEntry" onSubmit={(e) => this.onGuess(e)}>
-                <input type="text" name="textInput" ref={input => this.textInput = input} />
+                <input type="text" name="textInput" placeholder="Enter a number" autoComplete="off" ref={input => this.textInput = input} />
                 <button>Guess</button>
-                <GuessNumber {...this.props.guessNumber} />
+
             </form>
           );
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import GuessEntryForm from './guessEntry';
 import ResponseText from './responseText';
 import GuessHistory from './guessHistory';
+import GuessNumber from './guessNumber';
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -14,33 +15,63 @@ class GameEnclosure extends Component {
       currentFormat: 'guessing',
       targetNumber: (getRandomInt(1, 100)),
       responseText: "Make a guess!",
-      guesses: []
+      guesses: [],
+      guessNumber: "0"
     };
+    this.onGuess = this.onGuess.bind(this);
   }
 
-  componentWillMount(){
-    console.log(this.state);
-  }
+componentWillMount() {
+  console.log(this.state.targetNumber);
+  console.log(this.state.responseText);
+}
+
 
   onGuess(guess) {
       guess = guess.trim();
       console.log(guess);
-      console.log(this);
+
       console.log(this.state.targetNumber);
-      if (guess % 1 !== 0 || guess > 100) {
-        return window.alert("Guess a whole number, 1-100");
+
+      const difference = Math.abs(guess - this.state.targetNumber);
+
+      if (isNaN(guess) || guess > 100 || guess.length == 0) {
+        return (this.setState({
+          responseText: 'Enter a valid number 1-100'
+        }))
       }
-      if (guess !== this.state.targetNumber && guess > (this.state.targetNumber - 10) && guess < (this.state.targetNumber + 10)) {
-        //change responseText to "hot"
+      if (difference >= 50) {
+        this.setState({
+          responseText: 'Super cold!'
+        })
+        
       }
-      if (guess < (this.state.targetNumber - 10) || guess > (this.state.targetNumber + 10)) {
-        //change responseText to "cold"
+      else if (difference >=20) {
+        this.setState({
+          responseText: 'Cold!'
+        })
+      }
+      else if (difference >= 10) {
+        this.setState({
+          responseText: "You're warm!"
+        })
+      }
+      else if (difference >= 1) {
+        this.setState({
+          responseText: "You're on fire!"
+        })
       }
       if (guess === this.state.targetNumber) {
-          //change responseText to 'correct'
-          //change state to 'correct'
+        this.setState({
+          responseText: 'Correct!'
+        })
+        this.setState({
+          currentFormat: 'correct'
+        })
       }
-      //add guess to guess history
+      this.setState({
+        guesses: this.state.guesses.concat(guess)
+      })
   }
 
   setCurrentFormat(currentFormat) {
@@ -52,10 +83,14 @@ class GameEnclosure extends Component {
 
 
   render() {
+    const currentResponseText = this.state.responseText;
+    console.log(currentResponseText);
+    console.log(this.state.guesses);
     return (
       <div className="gameEnclosure">
-        <ResponseText />
+        <ResponseText {...currentResponseText}/>
         <GuessEntryForm onGuess={this.onGuess} />
+        <GuessNumber {...this.props.guessNumber} />
         <div className="guessHistoryDiv">
           <GuessHistory />
         </div>

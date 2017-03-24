@@ -6,19 +6,22 @@ class GuessHistory extends React.Component {
     super(props)
   }
   render() {
-    const guess = this.props.guesses.map((guess, index) =>
-      <PreviousGuess key={index} {...guess} />
+
+    const guesses = this.props.guesses.map((guess, index) =>
+      <PreviousGuess key={index} text={guess} />
     );
+
+    console.log(guesses);
     return (
       <div className="previousGuesses">
-        {guess}
+        {guesses}
       </div>
     );
   }
 };
 
 GuessHistory.defaultProps = {
-    guesses: []
+    guesses: ["1","2","3"]
 };
 
 export default GuessHistory;
