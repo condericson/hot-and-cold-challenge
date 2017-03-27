@@ -1,27 +1,14 @@
 import React from 'react';
-import PreviousGuess from './previousGuess';
 
-class GuessHistory extends React.Component {
-  constructor(props){
-    super(props)
-  }
-  render() {
-
-    const guesses = this.props.guesses.map((guess, index) =>
-      <PreviousGuess key={index} text={guess} />
-    );
-
-    console.log(guesses);
+export default function GuessHistory(props) {
+  const guesses = props.guesses.map((guess, index) =>
+    <li key={index}>{guess}</li>
+  );
     return (
       <div className="previousGuesses">
-        {guesses}
+        <ul>
+          {guesses}
+        </ul>
       </div>
-    );
-  }
-};
-
-GuessHistory.defaultProps = {
-    guesses: ["1","2","3"]
-};
-
-export default GuessHistory;
+    )
+}

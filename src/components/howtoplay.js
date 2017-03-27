@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function HowToPlay(props) {
     return (
-      <div className="howtoplaymodal">
+      <div className={props.classes}>
         <div className="howtocontent">
           <div className="howtoplaytitle">"What's hot? Who's cold?"</div>
           <p>This is a Hot or Cold Number Guessing Game. The game goes like this:</p>
@@ -13,7 +13,7 @@ export default function HowToPlay(props) {
           <li>3. &nbsp;&nbsp;  You will get feedback on how close ("hot") or far ("cold") your guess is.</li>
           </ul>
           <p>Get it?</p>
-          <button>Got it!</button>
+          <button onClick={props.onClick}>Got it!</button>
         </div>
       </div>
     );

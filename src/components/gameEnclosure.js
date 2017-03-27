@@ -8,7 +8,23 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-class GameEnclosure extends Component {
+
+
+/*function updateUI() {
+  ReactDOM.render(
+      <div className="gameEnclosure">
+        <ResponseText {...this.state.responseText}/>
+        <GuessEntryForm onGuess={this.onGuess} />
+        <GuessNumber {...this.props.guessNumber} />
+        <div className="guessHistoryDiv">
+          <GuessHistory {...this.state.guesses}/>
+        </div>
+      </div>,
+      document.getElementById('root')
+  );
+}*/
+
+export default class GameEnclosure extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,26 +32,27 @@ class GameEnclosure extends Component {
       targetNumber: (getRandomInt(1, 100)),
       responseText: "Make a guess!",
       guesses: [],
-      guessNumber: "0"
+      guessNumber: 0
     };
     this.onGuess = this.onGuess.bind(this);
+    this.iterateGuessNumber = this.iterateGuessNumber.bind(this);
   }
 
-componentWillMount() {
-  console.log(this.state.targetNumber);
-  console.log(this.state.responseText);
-}
-
+  iterateGuessNumber() {
+    let num = this.state.guessNumber;
+    num += 1;
+    this.setState({
+      guessNumber: num
+    })
+    console.log("guessNumber", this.state.guessNumber);
+  }
 
   onGuess(guess) {
       guess = guess.trim();
-      console.log(guess);
-
       console.log(this.state.targetNumber);
-
       const difference = Math.abs(guess - this.state.targetNumber);
 
-      if (isNaN(guess) || guess > 100 || guess.length == 0) {
+      if (isNaN(guess) || guess > 100 || guess.length === 0) {
         return (this.setState({
           responseText: 'Enter a valid number 1-100'
         }))
@@ -44,60 +61,60 @@ componentWillMount() {
         this.setState({
           responseText: 'Super cold!'
         })
-        
+        this.iterateGuessNumber();
       }
       else if (difference >=20) {
         this.setState({
           responseText: 'Cold!'
         })
+        this.iterateGuessNumber();
       }
       else if (difference >= 10) {
         this.setState({
           responseText: "You're warm!"
         })
+        this.iterateGuessNumber();
       }
       else if (difference >= 1) {
         this.setState({
           responseText: "You're on fire!"
         })
+        this.iterateGuessNumber();
       }
-      if (guess === this.state.targetNumber) {
+      if (guess == this.state.targetNumber) {
         this.setState({
           responseText: 'Correct!'
         })
         this.setState({
           currentFormat: 'correct'
         })
+        this.iterateGuessNumber();
       }
       this.setState({
         guesses: this.state.guesses.concat(guess)
       })
+      console.log(this.state.guesses);
   }
 
-  setCurrentFormat(currentFormat) {
+/*}  setCurrentFormat(currentFormat) {
       this.setState({
           currentFormat: 'guessing'
       });
-  }
+  }*/
 
 
 
-  render() {
-    const currentResponseText = this.state.responseText;
-    console.log(currentResponseText);
-    console.log(this.state.guesses);
+
+render() {
     return (
       <div className="gameEnclosure">
-        <ResponseText {...currentResponseText}/>
+        <ResponseText responseText={this.state.responseText} />
         <GuessEntryForm onGuess={this.onGuess} />
-        <GuessNumber {...this.props.guessNumber} />
+        <GuessNumber guessNumber={this.state.guessNumber} />
         <div className="guessHistoryDiv">
-          <GuessHistory />
+          <GuessHistory guesses={this.state.guesses} />
         </div>
       </div>
     );
-  }
 };
-
-
-export default GameEnclosure
+};
