@@ -9,21 +9,6 @@ function getRandomInt(min, max) {
 }
 
 
-
-/*function updateUI() {
-  ReactDOM.render(
-      <div className="gameEnclosure">
-        <ResponseText {...this.state.responseText}/>
-        <GuessEntryForm onGuess={this.onGuess} />
-        <GuessNumber {...this.props.guessNumber} />
-        <div className="guessHistoryDiv">
-          <GuessHistory {...this.state.guesses}/>
-        </div>
-      </div>,
-      document.getElementById('root')
-  );
-}*/
-
 export default class GameEnclosure extends Component {
   constructor(props) {
     super(props);
@@ -52,9 +37,9 @@ export default class GameEnclosure extends Component {
       console.log(this.state.targetNumber);
       const difference = Math.abs(guess - this.state.targetNumber);
 
-      if (isNaN(guess) || guess > 100 || guess.length === 0) {
+      if (isNaN(guess) || guess > 100 || guess < 1 || guess.length == 0) {
         return (this.setState({
-          responseText: 'Enter a valid number 1-100'
+          responseText: 'Enter a number 1-100'
         }))
       }
       if (difference >= 50) {

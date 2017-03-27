@@ -6,7 +6,8 @@ export default class Header extends React.Component {
     super(props)
     this.state = {
       active: false,
-      classes: 'howtoplaymodal, notDisplayed'
+      class1: 'howtoplaymodal',
+      class2: 'notDisplayed'
     }
   }
 
@@ -14,13 +15,15 @@ export default class Header extends React.Component {
     if(!this.state.active) {
       this.setState({
         active: true,
-        classes: 'howtoplaymodal, displayed'
+        class1: 'howtoplaymodal',
+        class2: 'displayed'
       })
     }
     else {
       this.setState({
         active: false,
-        classes: 'howtoplaymodal, notDisplayed'
+        class1: 'howtoplaymodal',
+        class2: 'notDisplayed'
       })
     }
   }
@@ -28,7 +31,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div>
-        <HowToPlay onClick={this.onClick.bind(this)} classes={this.state.classes}/>
+        <HowToPlay onClick={this.onClick.bind(this)} classes={[this.state.class1, this.state.class2].join(' ')}/>
           <div className="header">
             <div className="howToPlay">
               <p onClick={this.onClick.bind(this)}>What is this?</p>
